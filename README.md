@@ -10,17 +10,30 @@ Golang based library for the Path of Exile API.  It implements all endpoints for
 package main
 
 import (
-    "github.com/taion809/goexile"
+    "encoding/json"
     "fmt"
+    "github.com/taion809/goexile"
+    "log"
 )
 
 func main() {
     api := goexile.NewApi()
     results, err := api.GetAllLeagues()
 
-    for _, v := range results {
-        fmt.Printf("Name: %s \n", v.Name)
+    if err != nil {
+        log.Fatal(err)
     }
+
+    for _, v := range results {
+        fmt.Printf("Id: %s \n", v.Id)
+    }
+
+    l, err := json.Marshal(results)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println("Marshalled: ", string(l))
 }
 ```
 
